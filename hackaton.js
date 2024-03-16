@@ -25,7 +25,7 @@ app.post('/dialogflow', async (req, res) => {
 
 
 
-    pool.query(`SELECT * FROM NF WHERE documento = '${req.body.queryResult.queryText}'`, (err, value) => {
+    pool.query(`SELECT * FROM NF WHERE documento = UPPER('${req.body.queryResult.queryText}')`, (err, value) => {
       if (err || value.rows[0] == null) {
         res.send({
           fulfillmentMessages: [
