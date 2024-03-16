@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const NF = require('./models/nf')
 const port = 3000
+const prisma = new PrismaClient();
 
 app.use(express.json())
 
@@ -14,7 +15,9 @@ app.post('/dialogflow', async (req, res) => {
   console.log('Entrou')
 
 
-  const NF = await NF.findAll();
+  const NF = await prisma.NF.findOne({where:{
+      documento: req.body.documento
+  }})
 
 
   res.send(NF)
