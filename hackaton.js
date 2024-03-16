@@ -1,9 +1,6 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const { PrismaClient } = require("@prisma/client")
-
-let prisma = new PrismaClient()
 
 app.use(express.json())
 
@@ -36,9 +33,8 @@ app.post('/dialogflow', async (req, res) => {
     console.log('Current date from PostgreSQL:', value.rows);
   });
 
-  const NF = await prisma.NF.findOne({where:{
-      documento: req.body.documento
-  }})
+  
+  pool.end()
 
 
   res.send(NF)
