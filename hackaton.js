@@ -1,4 +1,5 @@
 const express = require('express')
+const User = require('./models/user');
 const app = express()
 const port = 3000
 
@@ -12,18 +13,13 @@ app.post('/dialogflow', async (req, res) => {
 
   console.log('Entrou')
 
-  res.send({
-    fulfillmentMessages: [
-      {
-        text: {
-          text: [
-            req.body.queryResult.queryText
-          ]
-        }
-      }
-    ]
-  })
+
+  const user = await User.findAll();
+
+
+  res.send(user)
 })
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
