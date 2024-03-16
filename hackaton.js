@@ -46,8 +46,7 @@ app.post('/dialogflow', async (req, res) => {
         {
           text: {
             text: [
-              value.rows[0].valor,
-              value.rows[0].data_estimada,
+              `A data estimada de recebimento da NF: ${value.rows[0].documento} é: ${value.rows[0].data_estimada} com o valor de: R$ ${value.rows[0].valor}`
             ]
           }
         }
