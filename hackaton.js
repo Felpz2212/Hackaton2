@@ -28,14 +28,11 @@ app.post('/dialogflow', async (req, res) => {
       console.error('Error executing query', err);
       return;
     }
-    console.log('Current date from PostgreSQL:', value.rows);
+    res.status(200).json(value.rows)
   });
 
 
   pool.end()
-
-
-  res.send(NF)
 })
 
 
