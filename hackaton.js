@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const NF = require('./models/nf')
+
 const port = 3000
 const prisma = new PrismaClient();
 
