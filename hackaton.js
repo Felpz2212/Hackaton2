@@ -46,7 +46,8 @@ app.post('/dialogflow', async (req, res) => {
         {
           text: {
             text: [
-              value.rows[0]
+              value.rows[0].valor,
+              value.rows[0].data_estimada,
             ]
           }
         }
