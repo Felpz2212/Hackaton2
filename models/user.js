@@ -11,5 +11,6 @@ const User = require('./models/user');
         });
     } catch (err) {
         console.log(err)
+        
     }
 });
