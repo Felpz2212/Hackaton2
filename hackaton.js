@@ -19,46 +19,50 @@ const pool = new Pool({
 });
 
 app.post('/dialogflow', async (req, res) => {
+  try {
 
-  console.log('Entrou')
+    console.log('Entrou')
 
 
 
-  pool.query(`SELECT * FROM NF WHERE documento = '${req.body.queryResult.queryText}'`, (err, value) => {
-    if (err || value.rows[0] == null) {
+    pool.query(`SELECT * FROM NF WHERE documento = '${req.body.queryResult.queryText}'`, (err, value) => {
+      if (err || value.rows[0] == null) {
+        res.send({
+          fulfillmentMessages: [
+            {
+              text: {
+                text: [
+                  `Não foi possível encontrar a NF: ${req.body.queryResult.queryText}`
+                ]
+              }
+            }
+          ]
+        })
+      }
+
+      const data = value.rows[0].data_estimada;
+
+      const dia = String(data.getDate()).padStart(2, '0');
+      const mes = String(data.getMonth() + 1).padStart(2, '0'); // +1 porque os meses são indexados de 0 a 11
+      const ano = data.getFullYear();
+
+      const dataFormatada = `${dia}/${mes}/${ano}`
+      console.log(value.rows)
       res.send({
         fulfillmentMessages: [
           {
             text: {
               text: [
-                `Não foi possível encontrar a NF ${req.body.queryResult.queryText} informada`
+                `A data estimada de recebimento da NF: ${value.rows[0].documento} é: ${dataFormatada} com o valor de: R$ ${value.rows[0].valor}`
               ]
             }
           }
         ]
       })
-    }
-
-    const data = value.rows[0].data_estimada;
-
-    const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0'); // +1 porque os meses são indexados de 0 a 11
-    const ano = data.getFullYear();
-    
-    const dataFormatada = `${dia}/${mes}/${ano}`
-    console.log(value.rows)
-    res.send({
-      fulfillmentMessages: [
-        {
-          text: {
-            text: [
-              `A data estimada de recebimento da NF: ${value.rows[0].documento} é: ${dataFormatada} com o valor de: R$ ${value.rows[0].valor}`
-            ]
-          }
-        }
-      ]
     })
-  })
+  } catch (err) {
+    console.log(err)
+  }
 });
 
 
