@@ -1,6 +1,6 @@
 const express = require('express')
-const User = require('./models/user');
 const app = express()
+const NF = require('./models/nf')
 const port = 3000
 
 app.use(express.json())
@@ -14,10 +14,10 @@ app.post('/dialogflow', async (req, res) => {
   console.log('Entrou')
 
 
-  const user = await User.findAll();
+  const NF = await NF.findAll();
 
 
-  res.send(user)
+  res.send(NF)
 })
 
 
