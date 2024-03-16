@@ -24,19 +24,19 @@ app.post('/dialogflow', async (req, res) => {
 
 
 
-  pool.query('SELECT * from NF where documento = ' + req.body.queryResult.queryText, (err, value) => {
+  pool.query(`SELECT * FROM NF WHERE documento = '${req.body.queryResult.queryText}'`, (err, value) => {
     if (err) {
       console.error('Error executing query', err);
       res.status(400);
     }
 
-    console.log(value.rows)
+    console.log(value)
     res.send({
       fulfillmentMessages: [
         {
           text: {
             text: [
-              value.rows[0]
+              value
             ]
           }
         }
