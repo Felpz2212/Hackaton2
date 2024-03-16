@@ -26,8 +26,10 @@ app.post('/dialogflow', async (req, res) => {
   pool.query('SELECT * from NF', (err, value) => {
     if (err) {
       console.error('Error executing query', err);
-      return;
+      res.status(400);
     }
+
+    console.log(value.rows)
     res.status(200).json(value.rows)
   });
 })
