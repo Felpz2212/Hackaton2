@@ -25,7 +25,7 @@ app.post('/dialogflow', async (req, res) => {
 
 
   pool.query(`SELECT * FROM NF WHERE documento = '${req.body.queryResult.queryText}'`, (err, value) => {
-    if (err || !value.rows) {
+    if (err || value.rows[0] == null) {
       res.send({
         fulfillmentMessages: [
           {
@@ -39,14 +39,20 @@ app.post('/dialogflow', async (req, res) => {
       })
     }
 
-  
+    const data = value.rows[0].data_estimada;
+
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // +1 porque os meses são indexados de 0 a 11
+    const ano = data.getFullYear();
+    
+    const dataFormatada = `${dia}/${mes}/${ano}`
     console.log(value.rows)
     res.send({
       fulfillmentMessages: [
         {
           text: {
             text: [
-              `A data estimada de recebimento da NF: ${value.rows[0].documento} é: ${value.rows[0].data_estimada} com o valor de: R$ ${value.rows[0].valor}`
+              `A data estimada de recebimento da NF: ${value.rows[0].documento} é: ${dataFormatada} com o valor de: R$ ${value.rows[0].valor}`
             ]
           }
         }
