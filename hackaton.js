@@ -9,10 +9,10 @@ app.get('/', (req, res) => {
 })
 
 const { Pool } = require('pg');
-
+ //postgres://deploy:E8AasENMyCvyjLaPNjKw52Hwi0NnmKvq@dpg-cnqpunen7f5s7388smlg-a/dbhackaton_vs6u
   const pool = new Pool({
     user: 'deploy',
-    host: 'dpg-cnqpunen7f5s7388smlg-a.oregon-postgres.render.com',
+    host: 'dpg-cnqpunen7f5s7388smlg-a',
     database: 'dbhackaton_vs6u',
     password: 'E8AasENMyCvyjLaPNjKw52Hwi0NnmKvq',
     port: '5432',
