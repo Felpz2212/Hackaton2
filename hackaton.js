@@ -25,18 +25,28 @@ app.post('/dialogflow', async (req, res) => {
 
 
   pool.query(`SELECT * FROM NF WHERE documento = '${req.body.queryResult.queryText}'`, (err, value) => {
-    if (err) {
-      console.error('Error executing query', err);
-      res.status(400);
+    if (err || !value.rows) {
+      res.send({
+        fulfillmentMessages: [
+          {
+            text: {
+              text: [
+                `Não foi possível encontrar a NF ${req.body.queryResult.queryText} informada`
+              ]
+            }
+          }
+        ]
+      })
     }
 
-    console.log(value)
+  
+    console.log(value.rows)
     res.send({
       fulfillmentMessages: [
         {
           text: {
             text: [
-              value
+              value.rows[0]
             ]
           }
         }
