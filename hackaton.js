@@ -23,16 +23,27 @@ app.post('/dialogflow', async (req, res) => {
   console.log('Entrou')
 
 
-  pool.query('SELECT * from NF', (err, value) => {
+
+  pool.query('SELECT * from NF where documento = ' + req.body.queryResult.queryText, (err, value) => {
     if (err) {
       console.error('Error executing query', err);
       res.status(400);
     }
 
     console.log(value.rows)
-    res.status(200).json(value.rows)
-  });
-})
+    res.send({
+      fulfillmentMessages: [
+        {
+          text: {
+            text: [
+              value.rows[0]
+            ]
+          }
+        }
+      ]
+    })
+  })
+});
 
 
 app.listen(port, () => {
