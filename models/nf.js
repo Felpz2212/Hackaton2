@@ -1,6 +1,7 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
+const sequelize = require('../sequelize')
 
-const NF = Sequelize.define('nf',{
+const NF = sequelize.define('nf',{
     id: {
         type: DataTypes.INTEGER,
     },

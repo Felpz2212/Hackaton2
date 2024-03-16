@@ -9,13 +9,4 @@ const sequelize = new Sequelize('dbhackaton_vs6u', 'deploy', 'E8AasENMyCvyjLaPNj
   });
 
 
-async function teste(){
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-      } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-}
-
-teste()
+module.exports(sequelize)
