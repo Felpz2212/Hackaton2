@@ -30,9 +30,6 @@ app.post('/dialogflow', async (req, res) => {
     }
     res.status(200).json(value.rows)
   });
-
-
-  pool.end()
 })
 
 
